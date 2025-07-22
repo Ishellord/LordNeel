@@ -1,6 +1,7 @@
 package com.id.dragneel.LatihanCRUD.controller;
 
 import com.id.dragneel.LatihanCRUD.model.Game;
+import com.id.dragneel.LatihanCRUD.model.Platform;
 import com.id.dragneel.LatihanCRUD.repo.GameRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,10 +48,13 @@ public class GameController {
     }
 
     @PostMapping("/addGame")
-    public ResponseEntity<Game> addGame(@RequestBody Game game){
-        Game gameObj = gameRepo.save(game);
-
-        return new ResponseEntity<>(gameObj, HttpStatus.OK);
+    public ResponseEntity<Game> addGame(@RequestBody Game game) {
+        try {
+            Game savedGame = gameRepo.save(game);
+            return new ResponseEntity<>(savedGame, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/updateGameById/{id}")
@@ -59,9 +63,11 @@ public class GameController {
 
         if(oldGameData.isPresent()){
             Game updateGameData = oldGameData.get();
-            updateGameData.setHero(newGameData.getHero());
-            updateGameData.setWeapon(newGameData.getWeapon());
-            updateGameData.setSkill(newGameData.getSkill());
+            updateGameData.setTitle(newGameData.getTitle());
+            updateGameData.setReleaseYear(newGameData.getReleaseYear());
+            updateGameData.setDeveloper(newGameData.getDeveloper());
+            updateGameData.setPlatform(newGameData.getPlatform());
+            updateGameData.setRating(newGameData.getRating());
 
             Game gameObj = gameRepo.save(updateGameData);
             return new ResponseEntity<>(gameObj, HttpStatus.OK);

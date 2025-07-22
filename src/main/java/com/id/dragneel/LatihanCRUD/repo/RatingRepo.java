@@ -1,10 +1,9 @@
 package com.id.dragneel.LatihanCRUD.repo;
 
-import com.id.dragneel.LatihanCRUD.model.Game;
+import com.id.dragneel.LatihanCRUD.model.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GameRepo extends JpaRepository<Game, Long> {
-
+public interface RatingRepo extends JpaRepository<Rating, Long> {
 }
